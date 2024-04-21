@@ -65,91 +65,98 @@ class MainActivity : ComponentActivity() {
                                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                                 actions = {
+                                    if(isLoggedIn.value) {
 
-                                    Column(modifier = Modifier
-                                        .fillMaxWidth(0.33f),
-                                        verticalArrangement = Arrangement.Center,
-                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        Column(
+                                            modifier = Modifier
+                                                .fillMaxWidth(0.33f),
+                                            verticalArrangement = Arrangement.Center,
+                                            horizontalAlignment = Alignment.CenterHorizontally,
                                         )
-                                    {
-                                        IconButton(
-                                            onClick = { navController.navigate(PRODUCT_LIST) },
-                                            colors = IconButtonDefaults.iconButtonColors(
-                                                containerColor = Color.Transparent,
-                                                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                                                disabledContentColor = MaterialTheme.colorScheme.tertiaryContainer,
-                                                disabledContainerColor = Color.Transparent
-                                            ),
-                                            enabled = currentRoute.value != PRODUCT_LIST
+                                        {
+                                            IconButton(
+                                                onClick = { navController.navigate(PRODUCT_LIST) },
+                                                colors = IconButtonDefaults.iconButtonColors(
+                                                    containerColor = Color.Transparent,
+                                                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                                    disabledContentColor = MaterialTheme.colorScheme.tertiaryContainer,
+                                                    disabledContainerColor = Color.Transparent
+                                                ),
+                                                enabled = currentRoute.value != PRODUCT_LIST
                                             ) {
-                                            Icon(
-                                                imageVector = Icons.Rounded.Home,
-                                                contentDescription = "Home"
+                                                Icon(
+                                                    imageVector = Icons.Rounded.Home,
+                                                    contentDescription = "Home"
+                                                )
+                                            }
+                                            Text(
+                                                text = "Home",
+                                                style = MaterialTheme.typography.labelLarge,
+                                                color = if (currentRoute.value == PRODUCT_LIST) MaterialTheme.colorScheme.tertiaryContainer else MaterialTheme.colorScheme.onPrimaryContainer
                                             )
                                         }
-                                        Text(
-                                            text = "Home",
-                                            style = MaterialTheme.typography.labelLarge,
-                                            color = if(currentRoute.value == PRODUCT_LIST) MaterialTheme.colorScheme.tertiaryContainer else MaterialTheme.colorScheme.onPrimaryContainer
+
+                                        Column(
+                                            modifier = Modifier
+                                                .fillMaxWidth(0.5f),
+                                            verticalArrangement = Arrangement.Center,
+                                            horizontalAlignment = Alignment.CenterHorizontally,
                                         )
-                                    }
+                                        {
+                                            IconButton(
+                                                onClick = { navController.navigate(CART) },
+                                                colors = IconButtonDefaults.iconButtonColors(
+                                                    containerColor = Color.Transparent,
+                                                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                                    disabledContentColor = MaterialTheme.colorScheme.tertiaryContainer,
+                                                    disabledContainerColor = Color.Transparent
+                                                ),
+                                                enabled = currentRoute.value != CART
+                                            ) {
+                                                Icon(
+                                                    imageVector = Icons.Rounded.ShoppingCart,
+                                                    contentDescription = "My Cart"
 
-                                    Column(modifier = Modifier
-                                        .fillMaxWidth(0.5f),
-                                        verticalArrangement = Arrangement.Center,
-                                        horizontalAlignment = Alignment.CenterHorizontally,
-                                    )
-                                    {
-                                        IconButton(
-                                            onClick = { navController.navigate(CART) },
-                                            colors = IconButtonDefaults.iconButtonColors(
-                                                containerColor = Color.Transparent,
-                                                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                                                disabledContentColor = MaterialTheme.colorScheme.tertiaryContainer,
-                                                disabledContainerColor = Color.Transparent
-                                            ),
-                                            enabled = currentRoute.value != CART) {
-                                            Icon(
-                                                imageVector = Icons.Rounded.ShoppingCart,
-                                                contentDescription = "My Cart"
-
-                                            )
-                                        }
-                                        Text(
-                                            text = "My Cart",
-                                            style = MaterialTheme.typography.labelLarge,
-                                            color = if(currentRoute.value == CART) MaterialTheme.colorScheme.tertiaryContainer else MaterialTheme.colorScheme.onPrimaryContainer
-
-                                        )
-                                    }
-
-                                    Column(modifier = Modifier
-                                        .fillMaxWidth(),
-                                        verticalArrangement = Arrangement.Center,
-                                        horizontalAlignment = Alignment.CenterHorizontally,
-                                    )
-                                    {
-                                        IconButton(
-                                            onClick = { navController.navigate(USER_DETAILS) },
-                                            colors = IconButtonDefaults.iconButtonColors(
-                                                containerColor = Color.Transparent,
-                                                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                                                disabledContentColor = MaterialTheme.colorScheme.tertiaryContainer,
-                                                disabledContainerColor = Color.Transparent
-
-                                            ),
-                                            enabled = currentRoute.value != USER_DETAILS) {
-                                            Icon(
-                                                imageVector = Icons.Rounded.Person,
-                                                contentDescription = "Profile Page"
+                                                )
+                                            }
+                                            Text(
+                                                text = "My Cart",
+                                                style = MaterialTheme.typography.labelLarge,
+                                                color = if (currentRoute.value == CART) MaterialTheme.colorScheme.tertiaryContainer else MaterialTheme.colorScheme.onPrimaryContainer
 
                                             )
                                         }
-                                        Text(
-                                            text = "Profile Page",
-                                            style = MaterialTheme.typography.labelLarge,
-                                            color = if(currentRoute.value == USER_DETAILS) MaterialTheme.colorScheme.tertiaryContainer else MaterialTheme.colorScheme.onPrimaryContainer
+
+                                        Column(
+                                            modifier = Modifier
+                                                .fillMaxWidth(),
+                                            verticalArrangement = Arrangement.Center,
+                                            horizontalAlignment = Alignment.CenterHorizontally,
                                         )
+                                        {
+                                            IconButton(
+                                                onClick = { navController.navigate(USER_DETAILS) },
+                                                colors = IconButtonDefaults.iconButtonColors(
+                                                    containerColor = Color.Transparent,
+                                                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                                    disabledContentColor = MaterialTheme.colorScheme.tertiaryContainer,
+                                                    disabledContainerColor = Color.Transparent
+
+                                                ),
+                                                enabled = currentRoute.value != USER_DETAILS
+                                            ) {
+                                                Icon(
+                                                    imageVector = Icons.Rounded.Person,
+                                                    contentDescription = "Profile Page"
+
+                                                )
+                                            }
+                                            Text(
+                                                text = "Profile Page",
+                                                style = MaterialTheme.typography.labelLarge,
+                                                color = if (currentRoute.value == USER_DETAILS) MaterialTheme.colorScheme.tertiaryContainer else MaterialTheme.colorScheme.onPrimaryContainer
+                                            )
+                                        }
                                     }
                                 }
                             )

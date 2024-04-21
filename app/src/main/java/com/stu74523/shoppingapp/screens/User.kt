@@ -74,8 +74,10 @@ import com.stu74523.shoppingapp.models.Geolocation
 import com.stu74523.shoppingapp.models.Name
 import com.stu74523.shoppingapp.models.User
 import com.stu74523.shoppingapp.routes.ABOUT_THIS_APP
+import com.stu74523.shoppingapp.routes.CREATE_USER
 import com.stu74523.shoppingapp.routes.LOGIN
 import com.stu74523.shoppingapp.routes.ORDER_HISTORY
+import com.stu74523.shoppingapp.routes.SIGN_UP
 import com.stu74523.shoppingapp.routes.SPLASH
 import com.stu74523.shoppingapp.ui.theme.ShoppingAppTheme
 import kotlinx.coroutines.launch
@@ -83,10 +85,17 @@ import kotlinx.coroutines.tasks.await
 
 
 fun getUser(dataBase: FirebaseFirestore, navController: NavController, user: MutableState<User>) {
+    if(Firebase.auth.uid == null)
+    {
+        navController.navigate(SPLASH)
+    }
     val docRef = dataBase.collection("users").whereEqualTo("id", Firebase.auth.uid)
 
     docRef.get()
         .addOnSuccessListener {
+            if (it.isEmpty) {
+                navController.navigate(CREATE_USER)
+            }
             for (doc in it.documents) {
                 user.value = doc.toObject<User>()!!
             }
@@ -310,10 +319,11 @@ fun UserDetailsScreen(
                                     var firstName by remember { mutableStateOf("") }
                                     var lastName by remember { mutableStateOf("") }
 
-                                    TextField(modifier = Modifier
-                                        .padding(2.dp)
-                                        .fillMaxWidth()
-                                        .fillMaxHeight(0.33f),
+                                    TextField(
+                                        modifier = Modifier
+                                            .padding(2.dp)
+                                            .fillMaxWidth()
+                                            .fillMaxHeight(0.33f),
                                         placeholder = { Text(text = "First Name") },
                                         shape = RoundedCornerShape(80.dp),
                                         colors = TextFieldDefaults.textFieldColors(
@@ -325,7 +335,8 @@ fun UserDetailsScreen(
                                             textColor = MaterialTheme.colorScheme.onSecondaryContainer,
                                         ),
                                         value = firstName,
-                                        onValueChange = { firstName = it },)
+                                        onValueChange = { firstName = it },
+                                    )
 
                                     TextField(modifier = Modifier
                                         .padding(2.dp)
@@ -364,7 +375,10 @@ fun UserDetailsScreen(
                                             pressedElevation = 0.dp,
                                             disabledElevation = 0.dp
                                         ),
-                                        border = BorderStroke(2.dp, MaterialTheme.colorScheme.onSecondaryContainer),
+                                        border = BorderStroke(
+                                            2.dp,
+                                            MaterialTheme.colorScheme.onSecondaryContainer
+                                        ),
                                         colors = ButtonDefaults.buttonColors(
                                             containerColor = MaterialTheme.colorScheme.secondaryContainer,
                                             contentColor = MaterialTheme.colorScheme.onSecondaryContainer
@@ -494,7 +508,10 @@ fun UserDetailsScreen(
                                             pressedElevation = 0.dp,
                                             disabledElevation = 0.dp
                                         ),
-                                        border = BorderStroke(2.dp, MaterialTheme.colorScheme.onSecondaryContainer),
+                                        border = BorderStroke(
+                                            2.dp,
+                                            MaterialTheme.colorScheme.onSecondaryContainer
+                                        ),
                                         colors = ButtonDefaults.buttonColors(
                                             containerColor = MaterialTheme.colorScheme.secondaryContainer,
                                             contentColor = MaterialTheme.colorScheme.onSecondaryContainer
@@ -730,7 +747,10 @@ fun UserDetailsScreen(
                                             pressedElevation = 0.dp,
                                             disabledElevation = 0.dp
                                         ),
-                                        border = BorderStroke(2.dp, MaterialTheme.colorScheme.onSecondaryContainer),
+                                        border = BorderStroke(
+                                            2.dp,
+                                            MaterialTheme.colorScheme.onSecondaryContainer
+                                        ),
                                         colors = ButtonDefaults.buttonColors(
                                             containerColor = MaterialTheme.colorScheme.secondaryContainer,
                                             contentColor = MaterialTheme.colorScheme.onSecondaryContainer
@@ -803,7 +823,8 @@ fun UserDetailsScreen(
                     onClick = {
                         Firebase.auth.signOut()
                         navController.navigate(SPLASH)
-                    },)
+                    },
+                )
                 {
                     Text(text = "Log Out")
                 }
